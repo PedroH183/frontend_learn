@@ -1,25 +1,6 @@
 import React from "react";
 import {Table} from 'reactstrap';
-import lapis from '/home/pedroparker/Documentos/Develo/Front-end/frontend_learn/my_app_react/src/assets/icons/lapis/lapis.png';
-import lixeira from '/home/pedroparker/Documentos/Develo/Front-end/frontend_learn/my_app_react/src/assets/icons/lixeira/lixeira.png';
 
-function IsAction(props)
-{
-    let campo = props.keys_t;
-
-    return(campo==='ações'? <ImageEdit/> : <th>{props.value}</th>);
-}
-
-function ImageEdit(props){
-    //avaliar a ideia de um id para cada imagem.
-    return(
-        <div className="GroupImages">
-            <img alt='lapis' src={lapis}/>
-            <img alt='lixeira' src={lixeira}/>
-        </div>
-        
-    );
-}
 
 function Coluna(props){
     // montando o cabeçalho da tabela.
@@ -36,20 +17,16 @@ function Coluna(props){
 function LinhaDeDados(props)
 {
     // passando cada objeto
+
     let keys = Object.keys(props.objeto);
     let element_formated = [];
 
-    keys.forEach( (key)=> 
-        element_formated.push( 
-            <IsAction value={props.objeto[key]} keys_t={key} /> )
-    );
-
-    //let element_formated = props.objeto.forEach( (key, value) => <ImageEdit key={key} value={value}/>)
+    keys.forEach( (key) => element_formated.push( <td>{props.objeto[key]}</td> ));
     
     return (
-    <tr>
-        {element_formated}
-    </tr>
+        <tr>
+            {element_formated}
+        </tr>
     );
 }
   
