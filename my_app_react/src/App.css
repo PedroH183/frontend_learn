@@ -50,6 +50,17 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.actButton{
+  border: 2px coral solid;
+  margin-right: 10px;
+  margin-left: 10px;
+  background-color: white;
+}
+
+.actButton:hover{
+  opacity: 40%;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

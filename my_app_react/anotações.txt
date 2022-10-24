@@ -1,0 +1,2 @@
+comentei tudo de table
+o código no git vai estar sem o reactstrap, o bootstrap não funcionou no lia
