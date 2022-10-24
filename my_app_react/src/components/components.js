@@ -1,7 +1,7 @@
 import React from "react";
 // import {Table} from 'reactstrap';
-import lapis from '/home/pedrohenrique/Documentos/Develo/project-html/frontend_learn/my_app_react/src/assets/icons/lapis/lapis.png';
-import lixeira from '/home/pedrohenrique/Documentos/Develo/project-html/frontend_learn/my_app_react/src/assets/icons/lixeira/lixeira.png';
+import lapis from '../assets/icons/lapis/lapis.png';
+import lixeira from '../assets/icons/lixeira/lixeira.png';
 
 
 class ClickButtonEdit extends React.Component{
