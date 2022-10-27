@@ -2,39 +2,57 @@ import React from "react";
 // import {Table} from 'reactstrap';
 import lapis from '../assets/icons/lapis/lapis.png';
 import lixeira from '../assets/icons/lixeira/lixeira.png';
-
-
-class ClickButtonEdit extends React.Component{
-    // classe responsável por editar cada campo, passar uma key para o button.
-    render(){
-        return;
-    }
-}
-
-class ClickButtonDelete extends React.Component{
-    // classe responsável por apagar cada campo, passar uma key para o button.
-    render(){
-        return;
-    }
-}
+import { contacts } from '../App';
 
 function IsAction(props)
 {
+    let json = props.json;
+    let id = props.id;
     let campo = props.keys_t;
 
-    return( campo=== 'ações' ? <ImageEdit/> : <th>{props.value}</th> );
+    return( campo=== 'ações' ? <ImageEdit json={json} id={id}/> : <th>{props.value}</th> );
 }
 
-function ImageEdit(props)
+class ImageEdit extends React.Component
 {   //avaliar a ideia de um id para cada imagem.
+    constructor(props){
+        super(props);
+        this.state = {allObj: contacts}
 
+        this.ClickButtonDelete = this.ClickButtonDelete.bind(this);
+        this.ClickButtonEdit = this.ClickButtonEdit.bind(this);
+    }
+
+    ClickButtonDelete(){ // classe responsável por editar cada campo, passar uma key para o button.
+        // Vamos usar a lista inteira aqui para deletar um índice
+        let newJson = [];
+        let origin_json = this.props.json;
+
+        for(let i = 0; i < origin_json.length; ++i){
+            if(origin_json[i].id === this.props.id){
+                continue;
+            }
+            newJson[i] = origin_json[i];
+        }
+        console.log(newJson);
+        console.log(origin_json);
+        this.setState({allObj: newJson});
+        this.render();
+    }
+
+    ClickButtonEdit(){ // classe responsável por apagar cada campo, passar uma key para o button.
+        //Vamos usar só um indice aqui para editar
+    }
+
+    render(){ 
     return(
         <div>
-            <button onClick={ClickButtonEdit} className='actButton'><img alt='lapis' type='image' src={lapis} /></button>
-            <button onClick={ClickButtonDelete} className='actButton'><img alt='lixeira' type='image' src={lixeira} /></button>
+            <button onClick={() => this.ClickButtonEdit()} className='actButton' ><img alt='lapis' type='image' src={lapis} /></button>
+            <button onClick={() => this.ClickButtonDelete()} className='actButton'><img alt='lixeira' type='image' src={lixeira} /></button>
         </div>
 
     );
+    }
 }
 
 function Coluna(props)
@@ -50,12 +68,14 @@ function Coluna(props)
 function LinhaDeDados(props)
 {   // passando cada objeto
 
+    let json = props.json;
+    let id = props.objeto.id;
     let keys = Object.keys(props.objeto);
     let element_formated = [];
 
     keys.forEach( (key) => 
         element_formated.push( 
-            <IsAction value={props.objeto[key]} keys_t={key} /> )
+            <IsAction value={props.objeto[key]} keys_t={key} json={json} id={id}/> )
     );
 
     //let element_formated = props.objeto.forEach( (key, value) => <ImageEdit key={key} value={value}/>)
@@ -75,7 +95,7 @@ export class Tabela extends React.Component {
 
     if(contacts_object_d)// definindo linhas de dados.
     {
-        contacts_object_d.forEach( (objeto) => fields.push( <LinhaDeDados objeto={objeto} /> )); 
+        contacts_object_d.forEach( (objeto) => fields.push( <LinhaDeDados objeto={objeto} json={contacts_object_d} /> )); 
     }
     
     return (

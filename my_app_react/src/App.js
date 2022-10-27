@@ -3,7 +3,7 @@ import { Tabela } from './components/components';
 import './App.css';
 
 
-let contacts = [
+export let contacts = [
       {id: 1, nome: 'Ajalmar', fone: '8888-7777', ações: ''},
       {id: 2, nome: 'Claudia', fone: '9999-4444',ações: ''},
       {id: 3, nome: 'Betinho', fone: '9876-3333',ações: ''},
