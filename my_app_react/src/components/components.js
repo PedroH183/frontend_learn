@@ -5,17 +5,45 @@ import lixeira from '../assets/icons/lixeira/lixeira.png';
 import { contacts } from '../App';
 
 export class AddButton extends React.Component {
-    onClick() {
-        let contact = {id: null, nome: '', fone: '', ações: ''};
-        contact.id = 6;
-        contact.nome = 'pedro';
-        contact.fone = 'XXXX-XXXX';
-        contacts.push(contact);
+    constructor(props){
+        super(props);
+        this.state = {estado: false};
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const name = event.target.elements.name.value;
+        const phone = event.target.elements.phone.value;
+        contacts.push({id: contacts[contacts.length - 1].id + 1, nome: name, fone: phone, ações: ''});
+
+        this.setState({estado: false});
+    }
+
+    onClick() { // Olhar como usa o prevState
+        this.setState({estado: true});
     }
 
     render(){
+        let estado = this.state.estado
+
         return(
-            <button onClick={() => this.onClick()}>NOVO USUARIO</button>
+            <div>
+                {
+                !estado &&
+                <button onClick={() => this.onClick()}>NOVO USUARIO</button>
+                }
+
+                {
+                estado &&
+                <form onSubmit={this.handleSubmit}>
+                    <input type="text" name="name" placeholder="Enter Name"/>
+                    <input type="text" name="phone" placeholder="Enter Phone"/>
+                    <button type="submit">ADD</button>
+                </form>
+                }
+            </div>
         );
     }
 }
@@ -61,7 +89,7 @@ class ImageEdit extends React.Component
                 break;
             }
         }
-        obje.id = 6;
+        obje.id = contacts[index].id;
         obje.nome = 'JC';
         obje.fone = '1234-1234';
         
@@ -120,7 +148,7 @@ export class Tabela extends React.Component {
     componentDidMount() {
         this.timerID = setInterval(
           () => this.tick(),
-          100
+          1
         );
       }
     
