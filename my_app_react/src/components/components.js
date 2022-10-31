@@ -33,10 +33,27 @@ class ImageEdit extends React.Component
     }
 
     ClickButtonEdit(){ // classe responsável por apagar cada campo, passar uma key para o button.
-        //Vamos usar só um indice aqui para editar
-    } 
+        // Vamos usar só um indice aqui para editar
+        // Vamos modificar apenas obje aqui 
+        let obje;
+        let index;
 
-    render(){ 
+        for (let i = 0; i < contacts.length; i++) {
+            if( this.props.id === contacts[i].id){
+                obje = contacts[i];
+                index = i;
+                break;
+            }
+        }
+        obje.id = 6;
+        obje.nome = 'JC';
+        obje.fone = '1234-1234';
+        // Depois de todo o processo
+        contacts[index] = obje;
+         
+    }
+
+    render() { 
     return(
         <>
             <button onClick={() => this.ClickButtonEdit()} className='actButton' ><img alt='lapis' type='image' src={lapis} /></button>
@@ -87,7 +104,7 @@ export class Tabela extends React.Component {
     componentDidMount() {
         this.timerID = setInterval(
           () => this.tick(),
-          1
+          100
         );
       }
     
