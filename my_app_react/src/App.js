@@ -24,7 +24,7 @@ function App() {
 
         <div className='ConteudoTabela'>
       
-          <Tabela contacts={contacts} />
+          <Tabela />
       
         </div>
       
