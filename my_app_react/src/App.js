@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabela } from './components/components';
+import { Tabela, AddButton } from './components/components';
 import './App.css';
 
 
@@ -25,9 +25,9 @@ function App() {
         <div className='ConteudoTabela'>
       
           <Tabela />
-      
+
         </div>
-      
+        <AddButton />
       </div>
     </div>
   );

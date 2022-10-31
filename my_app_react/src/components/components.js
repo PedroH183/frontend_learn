@@ -4,6 +4,22 @@ import lapis from '../assets/icons/lapis/lapis.png';
 import lixeira from '../assets/icons/lixeira/lixeira.png';
 import { contacts } from '../App';
 
+export class AddButton extends React.Component {
+    onClick() {
+        let contact = {id: null, nome: '', fone: '', ações: ''};
+        contact.id = 6;
+        contact.nome = 'pedro';
+        contact.fone = 'XXXX-XXXX';
+        contacts.push(contact);
+    }
+
+    render(){
+        return(
+            <button onClick={() => this.onClick()}>NOVO USUARIO</button>
+        );
+    }
+}
+
 function IsAction(props)
 {
     let id = props.id;
@@ -48,9 +64,9 @@ class ImageEdit extends React.Component
         obje.id = 6;
         obje.nome = 'JC';
         obje.fone = '1234-1234';
+        
         // Depois de todo o processo
         contacts[index] = obje;
-         
     }
 
     render() { 
@@ -140,5 +156,4 @@ export class Tabela extends React.Component {
 
     );
     }
-    
 }
