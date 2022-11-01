@@ -19,17 +19,12 @@ function App() {
       <div className='NavBar'>
         <div className='NavBarContainer'>Tabela</div>
       </div>
-
-      <div className='Funcional'>
-
-        <div className='ConteudoTabela'>
-      
+        <div>
           <Tabela />
-
         </div>
+        
         <AddButton />
       </div>
-    </div>
   );
 }
 

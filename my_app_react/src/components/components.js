@@ -32,15 +32,15 @@ export class AddButton extends React.Component {
             <div>
                 {
                 !estado &&
-                <button onClick={() => this.onClick()}>NOVO USUARIO</button>
+                <button className="newUser" onClick={() => this.onClick()}>NOVO USUARIO</button>
                 }
 
                 {
                 estado &&
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.handleSubmit} className="formStyle">
                     <input type="text" name="name" placeholder="Enter Name"/>
                     <input type="text" name="phone" placeholder="Enter Phone"/>
-                    <button type="submit">ADD</button>
+                    <button type="submit" className="newUser1">ADD</button>
                 </form>
                 }
             </div>
@@ -53,17 +53,20 @@ function IsAction(props)
     let id = props.id;
     let campo = props.keys_t;
 
-    return( campo === 'ações' ? <ImageEdit id={id}/> : <th>{props.value}</th> );
+    return( campo === 'ações' ? <th><ImageEdit id={id}/></th> : <th>{props.value}</th> );
 }
 
 class ImageEdit extends React.Component
 {   //avaliar a ideia de um id para cada imagem.
     constructor(props){
         super(props);
-        this.state = {allObj: contacts}
+        this.state = {allObj: contacts, edit: false, index: null, editObject: {}, nomeForm: '', foneForm: ''};
 
         this.ClickButtonDelete = this.ClickButtonDelete.bind(this);
         this.ClickButtonEdit = this.ClickButtonEdit.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onChangeNameForm = this.onChangeNameForm.bind(this);
+        this.onChangeFoneForm = this.onChangeFoneForm.bind(this);
     }
 
     ClickButtonDelete(){ // classe responsável por editar cada campo, passar uma key para o button.
@@ -78,31 +81,64 @@ class ImageEdit extends React.Component
 
     ClickButtonEdit(){ // classe responsável por apagar cada campo, passar uma key para o button.
         // Vamos usar só um indice aqui para editar
-        // Vamos modificar apenas obje aqui 
-        let obje;
+        // Vamos modificar apenas editObject aqui 
+        let editObject;
         let index;
 
         for (let i = 0; i < contacts.length; i++) {
             if( this.props.id === contacts[i].id){
-                obje = contacts[i];
+                editObject = contacts[i];
                 index = i;
                 break;
             }
         }
-        obje.id = contacts[index].id;
-        obje.nome = 'JC';
-        obje.fone = '1234-1234';
-        
-        // Depois de todo o processo
-        contacts[index] = obje;
+
+        this.setState({editObject: editObject, index: index, edit: true});
+        this.setState({nomeForm: editObject.nome, foneForm: editObject.fone});
+    }
+
+    onChangeNameForm(e) {
+        this.setState({nomeForm: e.target.value});
+    }
+
+    onChangeFoneForm(e) {
+        this.setState({foneForm: e.target.value});
+    }
+
+    handleSubmit(event){
+        event.preventDefault();
+        const name = event.target.elements.name.value;
+        const phone = event.target.elements.phone.value;
+
+
+        // this.setState({editObject: {id: '1', nome: name, fone: phone, ações: ''} , edit: false});
+        this.setState({edit: false});
+        contacts[this.state.index] =  {id: this.props.id, nome: name, fone: phone, ações: ''};
+        console.log(this.state.editObject);
+        console.log(contacts);
+        console.log(this.state.index);
     }
 
     render() { 
     return(
         <>
-            <button onClick={() => this.ClickButtonEdit()} className='actButton' ><img alt='lapis' type='image' src={lapis} /></button>
-            <button onClick={this.ClickButtonDelete} className='actButton'><img alt='lixeira' type='image' src={lixeira} /></button>
-        </  >
+            {
+                !this.state.edit &&
+                <>
+                    <button onClick={() => this.ClickButtonEdit()} className='actButtonLapis' ><img alt='lapis' type='image' src={lapis} /></button>
+                    <button onClick={this.ClickButtonDelete} className='actButtonLixeira'><img alt='lixeira' type='image' src={lixeira} /></button>
+                </>
+            }
+
+            {
+                this.state.edit &&
+                <form onSubmit={this.handleSubmit}>
+                    <input className="inputTabela" type="text" name="name" onChange={this.onChangeNameForm} value={this.state.nomeForm} placeholder="Enter Name"/>
+                    <input className="inputTabela" type="text" name="phone" onChange={this.onChangeFoneForm} value={this.state.foneForm} placeholder="Enter Phone"/>
+                    <button type="Submit">EDIT</button>
+                </form>
+            }
+        </>
 
     );
     }
@@ -142,7 +178,7 @@ export class Tabela extends React.Component {
 
     constructor(props){
         super(props);
-        this.state = {allObj: contacts};
+        this.state = {allObj: contacts, edit: false};
     }
 
     componentDidMount() {
@@ -162,26 +198,26 @@ export class Tabela extends React.Component {
     }
 
     render(){
-    let fields = []; // é cada linha de dados.
-    let colunas = Object.keys(this.state.allObj[0]); // pegando todas as colunas da tabela.
-    
-    if(this.state.allObj)// definindo linhas de dados.
-    {
-        this.state.allObj.forEach( (objeto) => fields.push( <LinhaDeDados objeto={objeto} />)); 
-    }
-    
-    return (
-        <table>
-            <thead>
-                <Coluna campos={colunas}/>
-            </thead>
-            
-            <tbody>
-                {fields}
-            </tbody>
-
-        </table>
-
-    );
+        let fields = []; // é cada linha de dados.
+        let colunas = Object.keys(this.state.allObj[0]); // pegando todas as colunas da tabela.
+        
+        if(this.state.allObj)// definindo linhas de dados.
+        {
+            this.state.allObj.forEach( (objeto) => fields.push( <LinhaDeDados objeto={objeto} />)); 
+        }
+        
+        return (
+            <>
+                <table className="ConteudoTabela">
+                    <thead>
+                        <Coluna campos={colunas}/>
+                    </thead>
+                    
+                    <tbody>
+                        {fields}
+                    </tbody>
+                </table>
+            </>
+        );
     }
 }

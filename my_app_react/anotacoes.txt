@@ -25,4 +25,4 @@ CREATE - CRUD
     
     Solução Escolhida:
         Subir o nível do Botão até Tabela (? - indefinido)
-        Tabela não renderiza mais, apenas Tabela. Ela vai conter também, externo à tabela, um formulário que ficará vísivel ou invvisível usando uma renderização condicional
+        <Tabela/> não renderiza mais apenas a Tabela. Ela vai conter também, externo à tabela, um formulário que ficará vísivel ou invisível usando uma renderização condicional
